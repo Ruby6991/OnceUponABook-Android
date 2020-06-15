@@ -46,6 +46,12 @@
                 android:value=".Activities.HomeActivity" />
         </activity>
         <activity android:name=".Activities.HistoryItemsActivity"></activity>
+        <activity android:name=".Activities.WishlistActivity"
+            android:parentActivityName=".Activities.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HomeActivity" />
+        </activity>
 <!--        <activity android:name=".Activities.FAQActivity"-->
 <!--            android:parentActivityName=".Activities.HomeActivity">-->
 <!--            <meta-data-->

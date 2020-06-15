@@ -158,27 +158,36 @@ public class ItemDetailsActivity extends AppCompatActivity {
             }
         });
 
-//        btnAddToWishlist=findViewById(R.id.add_to_wishlist_btn);
-//        btnAddToWishlist.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String userEmail=SharedPrefUtility.getInstance(ItemDetailsActivity.this).getUserEmail();
-//                List<User> users=User.listAll(User.class);
-//                for (User user:users) {
-//                    if (user.getEmail().equals(userEmail)) {
-//                        List<Item> items = Item.findWithQuery(Item.class,
-//                                "Select * from Item where code = ? ",Integer.toString(code));
-//                        for (Item item : items) {
-//                            WishlistItem wishlistItem = new WishlistItem( user, item);
-//                            wishlistItem.save();
-//                        }
-//                    }
-//                }
-//                btnAddToWishlist.setImageResource(R.drawable.heartpink);
-//                Toast.makeText(ItemDetailsActivity.this,
-//                        "Product Added to Wishlist",Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        btnAddToWishlist=findViewById(R.id.add_to_wishlist_btn);
+        btnAddToWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userEmail=SharedPrefUtility.getInstance(ItemDetailsActivity.this).getUserEmail();
+                BookDTO bookDTO=new BookDTO();
+                bookDTO.setId(code);
+
+                Call<Boolean> apiClient = APIBuilder.createAuthBuilder(ItemDetailsActivity.this).CreateWishlistItem(userEmail, bookDTO);
+                apiClient.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if(response.code()==401){
+                            SharedPrefUtility sharedPref = SharedPrefUtility.getInstance(ItemDetailsActivity.this);
+                            sharedPref.resetSharedPreferences();
+                            Intent intent=new Intent(ItemDetailsActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                        }else {
+                            btnAddToWishlist.setImageResource(R.drawable.heartpink);
+                            Toast.makeText(ItemDetailsActivity.this,
+                                    "Product Added to Wishlist",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        System.err.println(t.getMessage());
+                    }
+                });
+            }
+        });
 
 //        lvReviews=findViewById(R.id.list_view_reviews);
 //        List<Review> reviews=Review.listAll(Review.class);
@@ -234,41 +243,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
                     startActivity(intent);
                 }else {
                     btnAddToCart.performClick();
-//                    Boolean orderCreated = response.body();
-//                    if (orderCreated) {
-//                        BookDTO bookDTO = new BookDTO();
-//                        bookDTO.setId(code);
-//                        OrderBookDTO orderBook=new OrderBookDTO();
-//                        orderBook.setBook(bookDTO);
-//                        orderBook.setOrder(orderDTO);
-//                        orderBook.setQuantity(1);
-//                        List<OrderBookDTO> orderBookDTOS=new ArrayList<>();
-//                        orderBookDTOS.add(orderBook);
-//                        orderDTO.setOrderedBooks(orderBookDTOS);
-//                        Call<OrderDTO> apiClient = APIBuilder.createAuthBuilder(ItemDetailsActivity.this).UpdateOrderAddBook(orderDTO.getId(), orderDTO);
-//                        apiClient.enqueue(new Callback<OrderDTO>() {
-//                            @Override
-//                            public void onResponse(Call<OrderDTO> call, Response<OrderDTO> response) {
-//                                if(response.code()==401){
-//                                    SharedPrefUtility sharedPref = SharedPrefUtility.getInstance(ItemDetailsActivity.this);
-//                                    sharedPref.resetSharedPreferences();
-//                                    Intent intent=new Intent(ItemDetailsActivity.this,LoginActivity.class);
-//                                    startActivity(intent);
-//                                }else {
-//                                    OrderDTO order = response.body();
-//                                    if (order!=null) { ;
-//                                        Toast.makeText(ItemDetailsActivity.this,
-//                                                "Product Added to Cart",Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<OrderDTO> call, Throwable t) {
-//                                System.err.println(t.getMessage());
-//                            }
-//                        });
-//                    }
                 }
             }
 

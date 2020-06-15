@@ -54,14 +54,14 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String fName=fNameEditTxt.getText().toString();
                 final String lName=lNameEditTxt.getText().toString();
-                int phoneNo=Integer.parseInt(phoneNoEditTxt.getText().toString());
+                String phoneNo=phoneNoEditTxt.getText().toString();
                 final String email=emailEditTxt.getText().toString();
                 String address=addressEditTxt.getText().toString();
                 final String password=passwordEditTxt.getText().toString();
                 String confirmPsw=confirmPswEditTxt.getText().toString();
 
                 //check if any of the fields are vacant
-                if(fName.equals("")||lName.equals("")||email.equals("") ||phoneNoEditTxt.getText().toString().equals("")||address.equals("")
+                if(fName.equals("")||lName.equals("")||email.equals("") ||phoneNo.equals("")||address.equals("")
                         ||password.equals("")) {
                     Toast.makeText(getApplicationContext(), "Fill in All the Fields", Toast.LENGTH_LONG).show();
                     return;
@@ -69,7 +69,8 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
                     return;
                 }else{
-                    final UserDTO userDTO = new UserDTO(fName,lName,phoneNo,email,address,password,UserRole.Customer);
+                    int phoneNum= Integer.parseInt(phoneNoEditTxt.getText().toString());
+                    final UserDTO userDTO = new UserDTO(fName,lName,phoneNum,email,address,password,UserRole.Customer);
                     Call<Boolean> apiClient = APIBuilder.createBuilder().registerUser(userDTO);
                     apiClient.enqueue(new Callback<Boolean>() {
                         @Override

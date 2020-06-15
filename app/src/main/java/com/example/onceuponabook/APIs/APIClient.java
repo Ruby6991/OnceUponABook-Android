@@ -59,4 +59,10 @@ public interface APIClient {
     @POST("/GetOrder")
     Call<OrderDTO> getOrderDetails(@Body OrderDTO orderDTO);
 
+    @POST("/CreateWishlistItem/{id}")
+    Call<Boolean> CreateWishlistItem (@Path("id") String id, @Body BookDTO wishBook);
+
+    @POST("/getWishList")
+    Call<List<BookDTO>> getWishList(@Body UserDTO user);
+
 }

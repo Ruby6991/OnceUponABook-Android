@@ -43,14 +43,14 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
 
         final BookDTO item=mData.get(position).getBook();
-//        viewHolder.tv_cartitem.setText(item.getTitle());
-//        String url=item.getImagePath();
-//        Picasso.get().load(url).into(viewHolder.img_cartitem);
+        viewHolder.tv_cartitem.setText(item.getTitle());
+        String url=item.getImagePath();
+        Picasso.get().load(url).into(viewHolder.img_cartitem);
 //        viewHolder.tv_itemsize.setText("Size : "+mData.get(position).getSize());
 //        viewHolder.tv_itemcolor.setText("Color : "+mData.get(position).getColor());
-//        int currentQuantity=mData.get(position).getQuantity();
-//        viewHolder.tv_itemquantity.setText(Integer.toString(currentQuantity));
-//        viewHolder.tv_itemprice.setText("Rs."+Integer.toString(item.getPrice()*currentQuantity));
+        int currentQuantity=mData.get(position).getQuantity();
+        viewHolder.tv_itemquantity.setText(Integer.toString(currentQuantity));
+        viewHolder.tv_itemprice.setText("US$"+Double.toString(item.getPrice()*currentQuantity));
 
         viewHolder.btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,15 +138,15 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         public MyViewHolder(View itemView){
             super(itemView);
 
-//            tv_cartitem=itemView.findViewById(R.id.tv_cartitem_name);
+            tv_cartitem=itemView.findViewById(R.id.tv_cartitem_name);
 //            tv_itemsize=itemView.findViewById(R.id.tv_cartitem_size);
 //            tv_itemcolor=itemView.findViewById(R.id.tv_cartitem_color);
-//            tv_itemprice=itemView.findViewById(R.id.tv_cartitem_tprice);
-//            tv_itemquantity=itemView.findViewById(R.id.tv_cartitem_quantity);
-//            img_cartitem=itemView.findViewById(R.id.image_cart);
-//            btn_Add=itemView.findViewById(R.id.plus_button);
-//            btn_Deduct=itemView.findViewById(R.id.minus_button);
-//            btn_Delete=itemView.findViewById(R.id.remove_button);
+            tv_itemprice=itemView.findViewById(R.id.tv_cartitem_tprice);
+            tv_itemquantity=itemView.findViewById(R.id.tv_cartitem_quantity);
+            img_cartitem=itemView.findViewById(R.id.image_cart);
+            btn_Add=itemView.findViewById(R.id.plus_button);
+            btn_Deduct=itemView.findViewById(R.id.minus_button);
+            btn_Delete=itemView.findViewById(R.id.remove_button);
         }
     }
 

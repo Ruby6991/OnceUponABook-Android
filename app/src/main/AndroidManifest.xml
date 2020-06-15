@@ -39,6 +39,32 @@
                 android:value=".Activities.HomeActivity" />
         </activity>
         <activity android:name=".Activities.ItemDetailsActivity" />
+<!--        <activity android:name=".Activities.FAQActivity"-->
+<!--            android:parentActivityName=".Activities.HomeActivity">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".Activities.HomeActivity" />-->
+<!--        </activity>-->
+<!--        <activity android:name=".Activities.ContactUsActivity"-->
+<!--            android:parentActivityName=".Activities.HomeActivity">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".Activities.HomeActivity" />-->
+<!--        </activity>-->
+        <activity
+            android:name=".Activities.CartActivity"
+            android:parentActivityName=".Activities.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HomeActivity" />
+        </activity>
+<!--        <activity-->
+<!--            android:name=".Activities.CheckoutActivity"-->
+<!--            android:parentActivityName=".Activities.CartActivity">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value=".Activities.CartActivity" />-->
+<!--        </activity>-->
     </application>
 
 </manifest>

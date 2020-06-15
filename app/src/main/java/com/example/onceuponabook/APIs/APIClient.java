@@ -35,5 +35,7 @@ public interface APIClient {
     @POST("/CreateOrder")
     Call<Boolean> CreateOrder (@Body OrderDTO order);
 
+    @POST("/GetCurrentOrder")
+    Call<OrderDTO> getCurrentOrderDetails(@Body UserDTO user);
 
 }

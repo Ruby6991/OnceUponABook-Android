@@ -7,8 +7,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.onceuponabook.APIs.APIBuilder;
 import com.example.onceuponabook.Adapters.CartRecyclerAdapter;
+import com.example.onceuponabook.EnumClasses.OrderStatus;
+import com.example.onceuponabook.Models.BookDTO;
 import com.example.onceuponabook.Models.OrderBookDTO;
+import com.example.onceuponabook.Models.OrderDTO;
 import com.example.onceuponabook.Models.UserDTO;
 import com.example.onceuponabook.R;
 import com.example.onceuponabook.SharedPrefUtility;
@@ -21,6 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -48,41 +55,63 @@ public class CartActivity extends AppCompatActivity {
         checkout=findViewById(R.id.checkout_btn);
 
         final List<OrderBookDTO> lst=new ArrayList<>();
-        int total=0;
-        int itemNo=0;
+        final double[] total = {0};
+        final int[] itemNo = {0};
 
         String userEmail= SharedPrefUtility.getInstance(CartActivity.this).getUserEmail();
-//        List<UserDTO> users=User.findWithQuery(User.class,"Select * from User where email = ? ",userEmail);
-//        for (User user:users) {
-//            Cart cart=user.getCart();
-//            if(user.getCart()==null){
-//                Toast.makeText(CartActivity.this, "Your Cart Is Empty", Toast.LENGTH_SHORT).show();
-//            }else {
-//                if(user.getCart().getStatus().equals("pending")) {
-//
-//                    List<CartItem>cartitems=CartItem.findWithQuery(CartItem.class,
-//                            "Select * from CART_ITEM where  cart = ?",cart.getId().toString());
-//                    for(CartItem item:cartitems){
-//                        lst.add(item);
-//                        total=total+item.getItem().getPrice()*item.getQuantity();
-//                        itemNo=itemNo+item.getQuantity();
-//                    }
-//                }
-//            }
-//        }
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(userEmail);
 
-        RecyclerView recyclerView=findViewById(R.id.recycler_cart_items);
-        CartRecyclerAdapter myAdapter=new CartRecyclerAdapter(this,lst);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(myAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        Call<OrderDTO> apiClient = APIBuilder.createAuthBuilder(CartActivity.this).getCurrentOrderDetails(userDTO);
+        apiClient.enqueue(new Callback<OrderDTO>() {
+            @Override
+            public void onResponse(Call<OrderDTO> call, Response<OrderDTO> response) {
+                if(response.code()==401){
+                    SharedPrefUtility sharedPref = SharedPrefUtility.getInstance(CartActivity.this);
+                    sharedPref.resetSharedPreferences();
+                    Intent intent=new Intent(CartActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }else{
+                    //success scenario
+                    OrderDTO orderDTO = response.body();
+                    if(orderDTO.getOrderedBooks()==null){
+                        Toast.makeText(CartActivity.this, "Your Cart Is Empty", Toast.LENGTH_SHORT).show();
+                    }else {
+                        List<OrderBookDTO>cartitems=orderDTO.getOrderedBooks();
+                        for(OrderBookDTO item:cartitems){
+                            lst.add(item);
+                            total[0] = total[0] +item.getBook().getPrice()*item.getQuantity();
+                            itemNo[0] = itemNo[0] +item.getQuantity();
+                        }
+                        RecyclerView recyclerView=findViewById(R.id.recycler_cart_items);
+                        CartRecyclerAdapter myAdapter=new CartRecyclerAdapter(CartActivity.this,lst);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this));
+                        recyclerView.setAdapter(myAdapter);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        numItems.setText("Item Count : "+Integer.toString(itemNo));
+                        numItems.setText("Item Count : "+Integer.toString(itemNo[0]));
 
-        totalAmount.setText("Rs."+Integer.toString(total));
+                        totalAmount.setText("Rs."+Double.toString(total[0]));
+                    }
+                }
+            }
 
-        final int finalTotal = total;
-        final int finalItemNo = itemNo;
+            @Override
+            public void onFailure(Call<OrderDTO> call, Throwable t) {
+                System.err.println(t.getMessage());
+            }
+        });
+
+//        RecyclerView recyclerView=findViewById(R.id.recycler_cart_items);
+//        CartRecyclerAdapter myAdapter=new CartRecyclerAdapter(this,lst);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(myAdapter);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+        final double finalTotal = total[0];
+        final int finalItemNo = itemNo[0];
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -80,56 +80,6 @@
         android:textSize="18sp"
         android:textStyle="bold"/>
 
-<!--    <EditText-->
-<!--        android:id="@+id/checkoutSecCode_et"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_above="@id/checkoutItems_tv"-->
-<!--        android:layout_marginLeft="15dp"-->
-<!--        android:layout_marginRight="15dp"-->
-<!--        android:layout_marginBottom="6dp"-->
-<!--        android:background="@drawable/input_design"-->
-<!--        android:hint="Security Code"-->
-<!--        android:inputType="textPassword"-->
-<!--        android:padding="12dp"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/colorLogo"-->
-<!--        android:textColorHint="@color/colorLogo"-->
-<!--        android:textSize="18sp" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/checkoutExpdate_et"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_above="@+id/checkoutSecCode_et"-->
-<!--        android:layout_marginLeft="15dp"-->
-<!--        android:layout_marginRight="15dp"-->
-<!--        android:layout_marginBottom="10dp"-->
-<!--        android:background="@drawable/input_design"-->
-<!--        android:hint="Expiry Date"-->
-<!--        android:inputType="date"-->
-<!--        android:padding="12dp"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/colorLogo"-->
-<!--        android:textColorHint="@color/colorLogo"-->
-<!--        android:textSize="18sp" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/checkoutcard_et"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_above="@id/checkoutExpdate_et"-->
-<!--        android:layout_marginLeft="15dp"-->
-<!--        android:layout_marginRight="15dp"-->
-<!--        android:layout_marginBottom="7dp"-->
-<!--        android:background="@drawable/input_design"-->
-<!--        android:hint="Card Number"-->
-<!--        android:padding="12dp"-->
-<!--        android:textAllCaps="false"-->
-<!--        android:textColor="@color/colorLogo"-->
-<!--        android:textColorHint="@color/colorLogo"-->
-<!--        android:textSize="18sp" />-->
-
     <Spinner
         android:id="@+id/spinner1"
         android:layout_width="match_parent"

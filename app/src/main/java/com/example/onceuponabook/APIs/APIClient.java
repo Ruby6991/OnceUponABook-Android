@@ -10,6 +10,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -51,5 +52,11 @@ public interface APIClient {
 
     @PUT("/UpdateOrderCheckOut/{id}")
     Call<OrderDTO> UpdateOrderCheckOut (@Path("id") int id, @Body OrderDTO order);
+
+    @PUT("/UpdateUser/{id}")
+    Call<UserDTO> UpdateUser(@Path("id") String id, @Body UserDTO user);
+
+    @POST("/GetOrder")
+    Call<OrderDTO> getOrderDetails(@Body OrderDTO orderDTO);
 
 }

@@ -31,6 +31,14 @@
         <activity
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"></activity>
+        <activity
+            android:name=".Activities.ItemsActivity"
+            android:parentActivityName=".Activities.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.HomeActivity" />
+        </activity>
+        <activity android:name=".Activities.ItemDetailsActivity" />
     </application>
 
 </manifest>

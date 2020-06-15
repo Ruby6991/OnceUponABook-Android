@@ -42,17 +42,17 @@ public class BookCategoriesFragment extends Fragment {
 
         //the data for the recycler view
         lstItem=new ArrayList<>();
-        lstItem.add(new BookDTO("Art & Photography","https://i.pinimg.com/564x/fe/fc/e1/fefce1c8250e7679cf45486b5bbd2d45.jpg"));
-        lstItem.add(new BookDTO("Biography","https://i.pinimg.com/564x/6b/89/de/6b89de8d4ff4512702e8941031067617.jpg"));
-        lstItem.add(new BookDTO("Children's Books","https://i.pinimg.com/564x/ef/96/e7/ef96e7377f168d72c8ab1b5be3185e77.jpg"));
-        lstItem.add(new BookDTO("Crafts & Hobbies","https://i.pinimg.com/564x/ca/54/e6/ca54e62ec5bde58006fd91a959d9c472.jpg"));
-        lstItem.add(new BookDTO("Crime & Thriller","https://i.pinimg.com/564x/e5/aa/e6/e5aae6177ef46954621e3e7c827c9c93.jpg"));
-        lstItem.add(new BookDTO("Fiction","https://i.pinimg.com/564x/c0/86/70/c08670fa037abf12e6ae883a658c32d5.jpg"));
-        lstItem.add(new BookDTO("Food & Drink","https://i.pinimg.com/564x/87/f5/85/87f585fca09a9e9e4da8bb39358b45f8.jpg"));
-        lstItem.add(new BookDTO("Graphic Novels, Anime & Manga","https://i.pinimg.com/564x/87/f5/85/87f585fca09a9e9e4da8bb39358b45f8.jpg"));
-        lstItem.add(new BookDTO("History & Archaeology","https://i.pinimg.com/564x/87/f5/85/87f585fca09a9e9e4da8bb39358b45f8.jpg"));
-        lstItem.add(new BookDTO("Mind, Body & Spirit","https://i.pinimg.com/564x/87/f5/85/87f585fca09a9e9e4da8bb39358b45f8.jpg"));
-        lstItem.add(new BookDTO("Science Fiction, Fantasy & Horror","https://i.pinimg.com/564x/87/f5/85/87f585fca09a9e9e4da8bb39358b45f8.jpg"));
+        lstItem.add(new BookDTO("Art & Photography","https://images.unsplash.com/photo-1541701494587-cb58502866ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"));
+        lstItem.add(new BookDTO("Biography","https://static.digit.in/default/09ff826ec214c02674978d45487584b0e99ef69a.jpeg?tr=w-1200"));
+        lstItem.add(new BookDTO("Children's Books","https://images.unsplash.com/photo-1487521916606-6ba43a72537c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=782&q=80"));
+        lstItem.add(new BookDTO("Crafts & Hobbies","https://images.unsplash.com/photo-1504036648358-adaba3e9c023?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"));
+        lstItem.add(new BookDTO("Crime & Thriller","https://images.unsplash.com/photo-1548754218-e9ef33578d04?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
+        lstItem.add(new BookDTO("Fiction","https://images.unsplash.com/photo-1590959651373-a3db0f38a961?ixlib=rb-1.2.1&auto=format&fit=crop&w=637&q=80"));
+        lstItem.add(new BookDTO("Food & Drink","https://images.unsplash.com/photo-1496412705862-e0088f16f791?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"));
+        lstItem.add(new BookDTO("Graphic Novels, Anime & Manga","https://images.unsplash.com/photo-1565991344790-ac620cb64b91?ixlib=rb-1.2.1&auto=format&fit=crop&w=693&q=80"));
+        lstItem.add(new BookDTO("History & Archaeology","https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"));
+        lstItem.add(new BookDTO("Mind, Body & Spirit","https://images.unsplash.com/photo-1526750054187-b02dbcdafab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=847&q=80"));
+        lstItem.add(new BookDTO("Science Fiction, Fantasy & Horror","https://images.unsplash.com/photo-1575566884706-d605dcdfab17?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=889&q=80"));
 
         //create an instance of ItemsRecyclerAdapter
         ListRecyclerAdapter myAdapter=new ListRecyclerAdapter(getActivity(),lstItem);

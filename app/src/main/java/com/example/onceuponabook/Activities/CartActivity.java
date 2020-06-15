@@ -33,6 +33,7 @@ public class CartActivity extends AppCompatActivity {
     TextView totalAmount;
     Button checkout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class CartActivity extends AppCompatActivity {
         final List<OrderBookDTO> lst=new ArrayList<>();
         final double[] total = {0};
         final int[] itemNo = {0};
+        final int[] orderID = {0};
 
         String userEmail= SharedPrefUtility.getInstance(CartActivity.this).getUserEmail();
         UserDTO userDTO = new UserDTO();
@@ -72,6 +74,7 @@ public class CartActivity extends AppCompatActivity {
                 }else{
                     //success scenario
                     OrderDTO orderDTO = response.body();
+                    orderID[0] =orderDTO.getId();
                     if(orderDTO.getOrderedBooks()==null){
                         Toast.makeText(CartActivity.this, "Your Cart Is Empty", Toast.LENGTH_SHORT).show();
                     }else {
@@ -87,9 +90,24 @@ public class CartActivity extends AppCompatActivity {
                         recyclerView.setAdapter(myAdapter);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-                        numItems.setText("Item Count : "+Integer.toString(itemNo[0]));
+                        numItems.setText("Item Count : "+(itemNo[0]));
 
-                        totalAmount.setText("Rs."+Double.toString(total[0]));
+                        totalAmount.setText("US$"+(total[0]));
+
+                        final double finalTotal = total[0];
+                        final int finalItemNo = itemNo[0];
+                        final int finalOrderId = orderID[0];
+                        checkout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent=new Intent(CartActivity.this,CheckoutActivity.class);
+                                intent.putExtra("orderTotal", finalTotal);
+                                intent.putExtra("itemCount", finalItemNo);
+                                intent.putExtra("orderID",finalOrderId);
+                                startActivity(intent);
+
+                            }
+                        });
                     }
                 }
             }
@@ -100,18 +118,7 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
-        final double finalTotal = total[0];
-        final int finalItemNo = itemNo[0];
-        checkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(CartActivity.this,CheckoutActivity.class);
-                intent.putExtra("orderTotal", finalTotal);
-                intent.putExtra("itemCount", finalItemNo);
-                startActivity(intent);
 
-            }
-        });
 
     }
 

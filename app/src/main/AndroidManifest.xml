@@ -58,13 +58,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activities.HomeActivity" />
         </activity>
-<!--        <activity-->
-<!--            android:name=".Activities.CheckoutActivity"-->
-<!--            android:parentActivityName=".Activities.CartActivity">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.PARENT_ACTIVITY"-->
-<!--                android:value=".Activities.CartActivity" />-->
-<!--        </activity>-->
+        <activity
+            android:name=".Activities.CheckoutActivity"
+            android:parentActivityName=".Activities.CartActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.CartActivity" />
+        </activity>
     </application>
 
 </manifest>

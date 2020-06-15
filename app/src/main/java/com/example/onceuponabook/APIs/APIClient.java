@@ -46,4 +46,10 @@ public interface APIClient {
     @DELETE("/DeleteOrderBook/{orderId}/{bookId}")
     Call<Boolean> DeleteOrderBook(@Path("orderId") int orderId, @Path("bookId") int bookId );
 
+    @POST("/GetUser")
+    Call<UserDTO> GetUserDetails(@Body UserDTO user);
+
+    @PUT("/UpdateOrderCheckOut/{id}")
+    Call<OrderDTO> UpdateOrderCheckOut (@Path("id") int id, @Body OrderDTO order);
+
 }

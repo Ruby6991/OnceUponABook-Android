@@ -9,25 +9,38 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.onceuponabook.APIs.APIBuilder;
+import com.example.onceuponabook.Activities.CartActivity;
+import com.example.onceuponabook.Activities.ItemDetailsActivity;
+import com.example.onceuponabook.Activities.LoginActivity;
 import com.example.onceuponabook.Models.BookDTO;
 import com.example.onceuponabook.Models.OrderBookDTO;
+import com.example.onceuponabook.Models.OrderDTO;
 import com.example.onceuponabook.R;
+import com.example.onceuponabook.SharedPrefUtility;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<OrderBookDTO> mData;
+    private OrderDTO orderDTO;
 
-    public CartRecyclerAdapter(Context mContext, List<OrderBookDTO> mData) {
+    public CartRecyclerAdapter(Context mContext, List<OrderBookDTO> mData, OrderDTO orderDTO) {
         this.mContext = mContext;
         this.mData = mData;
+        this.orderDTO=orderDTO;
     }
 
     @NonNull
@@ -46,8 +59,6 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         viewHolder.tv_cartitem.setText(item.getTitle());
         String url=item.getImagePath();
         Picasso.get().load(url).into(viewHolder.img_cartitem);
-//        viewHolder.tv_itemsize.setText("Size : "+mData.get(position).getSize());
-//        viewHolder.tv_itemcolor.setText("Color : "+mData.get(position).getColor());
         int currentQuantity=mData.get(position).getQuantity();
         viewHolder.tv_itemquantity.setText(Integer.toString(currentQuantity));
         viewHolder.tv_itemprice.setText("US$"+Double.toString(item.getPrice()*currentQuantity));
@@ -55,63 +66,97 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         viewHolder.btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int quantity=Integer.parseInt(viewHolder.tv_itemquantity.getText().toString())+1;
-//                mData.get(position).setQuantity(quantity);
-//                mData.get(position).save();
-//                viewHolder.tv_itemquantity.setText(Integer.toString(quantity));
-//
-//                Long itemID = item.getId();
-//                Item updateItem = Item.findById(Item.class, itemID);
-//                updateItem.setQtyInStock(item.getQtyInStock()-1);
-//                updateItem.save();
-//
-//
-//                int newPrice=item.getPrice()*quantity;
-//                viewHolder.tv_itemprice.setText("Rs."+Integer.toString(newPrice));
-//
-//                ((Activity)mContext).finish();
-//                Intent intent=new Intent(mContext,CartActivity.class);
-//                mContext.startActivity(intent);
+
+                OrderBookDTO orderBook=new OrderBookDTO();
+                orderBook.setBook(item);
+                orderBook.setOrder(orderDTO);
+
+                Call<OrderBookDTO> apiClient = APIBuilder.createAuthBuilder(mContext).UpdateBookQuantity("increase", orderBook);
+                apiClient.enqueue(new Callback<OrderBookDTO>() {
+                    @Override
+                    public void onResponse(Call<OrderBookDTO> call, Response<OrderBookDTO> response) {
+
+                            OrderBookDTO orderBook = response.body();
+                            if (orderBook!=null) {
+                                int quantity=Integer.parseInt(viewHolder.tv_itemquantity.getText().toString())+1;
+                                viewHolder.tv_itemquantity.setText(Integer.toString(quantity));
+
+                                double newPrice=item.getPrice()*quantity;
+                                viewHolder.tv_itemprice.setText("US$"+Double.toString(newPrice));
+
+                                ((Activity)mContext).finish();
+                                Intent intent=new Intent(mContext, CartActivity.class);
+                                mContext.startActivity(intent);
+                            }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderBookDTO> call, Throwable t) {
+                        System.err.println(t.getMessage());
+                    }
+                });
+
             }
         });
 
         viewHolder.btn_Deduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int quantity=Integer.parseInt(viewHolder.tv_itemquantity.getText().toString())-1;
-//                mData.get(position).setQuantity(quantity);
-//                mData.get(position).save();
-//                viewHolder.tv_itemquantity.setText(Integer.toString(quantity));
-//
-//                Long itemID = item.getId();
-//                Item updateItem = Item.findById(Item.class, itemID);
-//                updateItem.setQtyInStock(item.getQtyInStock()+1);
-//                updateItem.save();
-//
-//                int newPrice=item.getPrice()*quantity;
-//                viewHolder.tv_itemprice.setText("Rs."+Integer.toString(newPrice));
-//
-//                ((Activity)mContext).finish();
-//                Intent intent=new Intent(mContext,CartActivity.class);
-//                mContext.startActivity(intent);
+                OrderBookDTO orderBook=new OrderBookDTO();
+                orderBook.setBook(item);
+                orderBook.setOrder(orderDTO);
+
+                Call<OrderBookDTO> apiClient = APIBuilder.createAuthBuilder(mContext).UpdateBookQuantity("decrease", orderBook);
+                apiClient.enqueue(new Callback<OrderBookDTO>() {
+                    @Override
+                    public void onResponse(Call<OrderBookDTO> call, Response<OrderBookDTO> response) {
+
+                        OrderBookDTO orderBook = response.body();
+                        if (orderBook!=null) {
+                            int quantity=Integer.parseInt(viewHolder.tv_itemquantity.getText().toString())-1;
+                            viewHolder.tv_itemquantity.setText(Integer.toString(quantity));
+
+                            double newPrice=item.getPrice()*quantity;
+                            viewHolder.tv_itemprice.setText("US$"+Double.toString(newPrice));
+
+                            ((Activity)mContext).finish();
+                            Intent intent=new Intent(mContext, CartActivity.class);
+                            mContext.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<OrderBookDTO> call, Throwable t) {
+                        System.err.println(t.getMessage());
+                    }
+                });
+
             }
         });
 
         viewHolder.btn_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mData.get(position).delete();
-//                viewHolder.itemView.setVisibility(View.INVISIBLE);
-//
-//                int quantity=Integer.parseInt(viewHolder.tv_itemquantity.getText().toString());
-//                Long itemID = item.getId();
-//                Item updateItem = Item.findById(Item.class, itemID);
-//                updateItem.setQtyInStock(item.getQtyInStock()+quantity);
-//                updateItem.save();
-//
-//                ((Activity)mContext).finish();
-//                Intent intent=new Intent(mContext,CartActivity.class);
-//                mContext.startActivity(intent);
+                Call<Boolean> apiClient = APIBuilder.createAuthBuilder(mContext).DeleteOrderBook(orderDTO.getId(),item.getId());
+                apiClient.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+                        Boolean deleted = response.body();
+                        if (deleted) {
+                            Toast.makeText(mContext, "Your Cart Is Empty", Toast.LENGTH_SHORT).show();
+
+                            ((Activity)mContext).finish();
+                            Intent intent=new Intent(mContext, CartActivity.class);
+                            mContext.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        System.err.println(t.getMessage());
+                    }
+                });
             }
         });
     }
@@ -125,8 +170,6 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_cartitem;
-        TextView tv_itemsize;
-        TextView tv_itemcolor;
         TextView tv_itemprice;
         TextView tv_itemquantity;
         ImageView img_cartitem;
@@ -139,8 +182,6 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
             super(itemView);
 
             tv_cartitem=itemView.findViewById(R.id.tv_cartitem_name);
-//            tv_itemsize=itemView.findViewById(R.id.tv_cartitem_size);
-//            tv_itemcolor=itemView.findViewById(R.id.tv_cartitem_color);
             tv_itemprice=itemView.findViewById(R.id.tv_cartitem_tprice);
             tv_itemquantity=itemView.findViewById(R.id.tv_cartitem_quantity);
             img_cartitem=itemView.findViewById(R.id.image_cart);

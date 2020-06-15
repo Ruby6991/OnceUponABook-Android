@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.example.onceuponabook.APIs.APIBuilder;
 import com.example.onceuponabook.Adapters.CartRecyclerAdapter;
-import com.example.onceuponabook.EnumClasses.OrderStatus;
-import com.example.onceuponabook.Models.BookDTO;
 import com.example.onceuponabook.Models.OrderBookDTO;
 import com.example.onceuponabook.Models.OrderDTO;
 import com.example.onceuponabook.Models.UserDTO;
@@ -84,7 +82,7 @@ public class CartActivity extends AppCompatActivity {
                             itemNo[0] = itemNo[0] +item.getQuantity();
                         }
                         RecyclerView recyclerView=findViewById(R.id.recycler_cart_items);
-                        CartRecyclerAdapter myAdapter=new CartRecyclerAdapter(CartActivity.this,lst);
+                        CartRecyclerAdapter myAdapter=new CartRecyclerAdapter(CartActivity.this,lst, orderDTO);
                         recyclerView.setLayoutManager(new LinearLayoutManager(CartActivity.this));
                         recyclerView.setAdapter(myAdapter);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -101,14 +99,6 @@ public class CartActivity extends AppCompatActivity {
                 System.err.println(t.getMessage());
             }
         });
-
-//        RecyclerView recyclerView=findViewById(R.id.recycler_cart_items);
-//        CartRecyclerAdapter myAdapter=new CartRecyclerAdapter(this,lst);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(myAdapter);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
 
         final double finalTotal = total[0];
         final int finalItemNo = itemNo[0];

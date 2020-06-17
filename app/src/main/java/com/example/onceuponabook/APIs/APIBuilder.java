@@ -1,18 +1,13 @@
 package com.example.onceuponabook.APIs;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 
-import com.example.onceuponabook.Activities.HomeActivity;
-import com.example.onceuponabook.Activities.LoginActivity;
 import com.example.onceuponabook.SharedPrefUtility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
-import androidx.fragment.app.FragmentActivity;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,8 +22,7 @@ public class APIBuilder {
     public static APIClient createBuilder(){
         if(apiClient==null) {
             Retrofit.Builder builder = new Retrofit.Builder()
-                    //.baseUrl("http://10.0.2.2:8080")
-                    .baseUrl("http://192.168.1.6:8080")
+                    .baseUrl("http://192.168.1.4:8080")
                     .addConverterFactory(GsonConverterFactory.create());
 
             Retrofit retrofit = builder.build();
@@ -62,8 +56,7 @@ public class APIBuilder {
 
             OkHttpClient client = httpClient.build();
             Retrofit retrofit = new Retrofit.Builder()
-                    //.baseUrl("http://10.0.2.2:8080")
-                    .baseUrl("http://192.168.1.6:8080")
+                    .baseUrl("http://192.168.1.4:8080")
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(client)
                     .build();
